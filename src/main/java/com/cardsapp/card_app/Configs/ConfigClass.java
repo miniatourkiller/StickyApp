@@ -60,8 +60,9 @@ public class ConfigClass {
         "/v2/**",
                         "/v3/**",
                         "/v3/api-docs/**",
-                        "/remas/v3/api-docs",
-                        "/remas/v3/api-docs/**",
+                        "/sticky/api/v1/all/**",
+                        "/cards-app/v3/api-docs",
+                        "/cards-app/v3/api-docs/**",
                         "/swagger-resources",
                         "/swagger-resources/**",
                         "/configuration/ui",
@@ -70,8 +71,6 @@ public class ConfigClass {
                         "/swagger-ui/**",
                         "/webjars/**",
                         "/swagger-ui.html").permitAll())
-        .authorizeHttpRequests((auth)->auth.requestMatchers("remas/api/v1/getters/landlord/**").hasAnyAuthority("LANDLORD"))
-        .authorizeHttpRequests((auth)->auth.requestMatchers("remas/api/v1/discipline/admin/**").hasAnyAuthority("ADMIN"))
         .authorizeHttpRequests((auth)->auth.anyRequest().authenticated())
         .sessionManagement((sessionManagement)-> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .addFilterBefore(new AuthorizationFilter(jwtService()), UsernamePasswordAuthenticationFilter.class)

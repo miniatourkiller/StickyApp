@@ -1,5 +1,6 @@
 package com.cardsapp.card_app.Services.Imp;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -254,12 +255,37 @@ public class AllServicesImp implements AllServices {
 
     @Override
     public ResponseDto getCards(RequestCard requestCard) {
-        return new ResponseDto(200, "Cards retrieved successfully", criteriaRepo.getCards(requestCard));
+        return new ResponseDto(200, "Cards retrieved successfully", criteriaRepo.getCards(requestCard, UserName.userName()));
     }
 
     @Override
     public ResponseDto getUsers(RequestUsers requestUsers) {
         return new ResponseDto(200, "Users retrieved successfully", criteriaRepo.getUsers(requestUsers));
+    }
+
+    @Override
+    public ResponseDto activateCardReminder(Long cardId, boolean status, String dateTime) {
+        if(isTimeFormatGood(dateTime)){
+            Card card = cardRepo.findById(cardId).orElse(null);
+            if(card == null){
+                return new ResponseDto(400, "Card not found");
+            }
+            card.setReminder(status);
+            card.setReminderTime(dateTime);
+            cardRepo.save(card);
+            return new ResponseDto(200, status?"Card reminder activated":"Card reminder deactivated");
+        }else{
+            return new ResponseDto(400, "Bad time format: yyyy-MM-dd'T'HH:mm:ss:zzzz");
+        }
+    }
+
+    private boolean isTimeFormatGood(String dateTime){
+        try {
+            LocalDateTime.parse(dateTime);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
     
 }

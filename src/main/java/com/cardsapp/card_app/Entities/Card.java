@@ -24,6 +24,7 @@ public class Card extends BaseEntity{
     private List<TextsEntity> texts;
     private boolean reminder;
     private int reminderCount;
+    private String reminderTime;
     @ManyToOne
     private UserEntity owner;
 }

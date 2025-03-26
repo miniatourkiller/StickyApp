@@ -17,6 +17,7 @@ import com.cardsapp.card_app.Entities.UserEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
@@ -28,19 +29,19 @@ import lombok.extern.slf4j.Slf4j;
 public class CriteriaRepo {
     private final EntityManager entityManager;
     
-    public Page<Card> getCards(RequestCard requestCard) {
+    public Page<Card> getCards(RequestCard requestCard, String email) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Card> criteriaQuery = criteriaBuilder.createQuery(Card.class);
         Root<Card> root = criteriaQuery.from(Card.class);
 
-        List<Predicate> predicates = getCardsPredicates(requestCard, criteriaBuilder, root);
+        List<Predicate> predicates = getCardsPredicates(requestCard, email, criteriaBuilder, root);
         criteriaQuery.where(predicates.toArray(new Predicate[0]));
         criteriaQuery.orderBy(criteriaBuilder.desc(root.get("dateCreated")));
 
         //count the total records
         CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
         Root<Card> countRoot = countQuery.from(Card.class);
-        List<Predicate> countPredicates = getCardsPredicates(requestCard, criteriaBuilder, countRoot);
+        List<Predicate> countPredicates = getCardsPredicates(requestCard, email, criteriaBuilder, countRoot);
         countQuery.select(criteriaBuilder.count(countRoot));
         countQuery.where(countPredicates.toArray(new Predicate[0]));
         Long total = entityManager.createQuery(countQuery).getSingleResult();
@@ -53,11 +54,14 @@ public class CriteriaRepo {
         return new PageImpl<>(cards, pageable, total);
     }
 
-    private List<Predicate> getCardsPredicates(RequestCard requestCard, CriteriaBuilder criteriaBuilder, Root<Card> root) {
+    private List<Predicate> getCardsPredicates(RequestCard requestCard, String email, CriteriaBuilder criteriaBuilder, Root<Card> root) {
         List<Predicate> predicates = new ArrayList<>();
 
         //handle delete
         predicates.add(criteriaBuilder.equal(root.get("deleted"), false));
+        //handle email
+        Join<Card, UserEntity> join = root.join("owner");
+        predicates.add(criteriaBuilder.like(join.get("email"), "%"+email+"%"));
         
         //check title
         if(requestCard.getTitle() != null){

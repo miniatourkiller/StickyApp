@@ -30,4 +30,6 @@ public interface AllServices {
 
     public ResponseDto getCards(RequestCard requestCard);
     public ResponseDto getUsers(RequestUsers requestUsers);
+
+    public ResponseDto activateCardReminder(Long cardId, boolean status, String dateTime);
 }

@@ -17,7 +17,7 @@ spring:
       ddl-auto: update
   data:
     redis:
-      host: remas-ke.co.ke
+      host: 161.97.69.205
       port: 6379
       # password: password
       database: 11
