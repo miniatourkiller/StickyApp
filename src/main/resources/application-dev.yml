@@ -30,3 +30,11 @@ spring:
 rsa:
   private-key: classpath:certs/private_key.pem
   public-key: classpath:certs/public_key.pem
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  api-docs:
+    path: /cards-app/v3/api-docs
+    enabled: true
