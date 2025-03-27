@@ -12,6 +12,7 @@ public class CardResponse {
     private Long id;
     private String color;
     private String title;
+    private String dateCreated;
     private boolean reminder;
 
     private List<TextsResponse> texts;
@@ -24,6 +25,7 @@ public class CardResponse {
         private boolean lineThrough;
         private boolean highlight;
         private boolean underline;
+        private String dateCreated;
 
         public TextsResponse(TextsEntity text, long cardId) {
             this.id = text.getId();
@@ -40,6 +42,7 @@ public class CardResponse {
         this.color = card.getColor();
         this.title = card.getTitle();
         this.reminder = card.isReminder();
+        this.dateCreated = card.getDateCreated();
         this.texts = card.getTexts().stream().map(text -> new TextsResponse(text, card.getId())).toList();
     }
 }

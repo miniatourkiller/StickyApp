@@ -122,15 +122,26 @@ public class AllServicesImp implements AllServices {
     }
 
     @Override
-    public ResponseDto deleteText(Long textId) {
+    public ResponseDto deleteText(Long textId, Long cardId) {
         UserEntity userEntity = cacheServices.getUser(UserName.userName());
         if(userEntity == null){
             return new ResponseDto(400, "User not found");
         }
+
+        Card card = cardRepo.findById(cardId).orElse(null);
+        if(card == null){
+            return new ResponseDto(400, "Card not found");
+        }
+        if(card.getOwner().getId() != userEntity.getId()){
+            return new ResponseDto(400, "You are not the owner of this card");
+        }
+
         TextsEntity text = textsRepo.findById(textId).orElse(null);
         if(text == null){
             return new ResponseDto(400, "Text not found");
         }
+        card.getTexts().remove(text);
+        cardRepo.save(card);
         textsRepo.delete(text);
         return new ResponseDto(200, "Text deleted successfully");
     }

@@ -39,9 +39,9 @@ public class Controller {
         return getResponseEntity(allServices.addText(cardId, textDto));
     }
 
-    @DeleteMapping("/text/{textId}")
-    public ResponseEntity<ResponseDto> deleteText(@PathVariable Long textId) {
-        return getResponseEntity(allServices.deleteText(textId));
+    @DeleteMapping("/text/{textId}/{cardId}")
+    public ResponseEntity<ResponseDto> deleteText(@PathVariable Long textId, @PathVariable Long cardId) {
+        return getResponseEntity(allServices.deleteText(textId, cardId));
     }
 
     @PutMapping("/text")

@@ -14,7 +14,7 @@ public interface AllServices {
     public ResponseDto updateCard(CardDto cardDto);
 
     public ResponseDto addText(Long cardId, TextDto textDto);
-    public ResponseDto deleteText(Long textId);
+    public ResponseDto deleteText(Long textId, Long cardId);
     public ResponseDto updateText(TextDto textDto);
     
     public ResponseDto underline(Long textId, boolean status);
