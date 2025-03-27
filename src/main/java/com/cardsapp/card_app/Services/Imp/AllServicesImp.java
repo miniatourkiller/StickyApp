@@ -71,7 +71,7 @@ public class AllServicesImp implements AllServices {
         if(card == null){
             return new ResponseDto(400, "Card not found");
         }
-        if(card.getOwner().getId() != userEntity.getId()){
+        if(!card.getOwner().getEmail().equals(userEntity.getEmail())){
             return new ResponseDto(400, "You are not the owner of this card");
         }
         card.setDeleted(true);
@@ -89,7 +89,7 @@ public class AllServicesImp implements AllServices {
         if(card == null){
             return new ResponseDto(400, "Card not found");
         }
-        if(card.getOwner().getId() != userEntity.getId()){
+        if(!card.getOwner().getEmail().equals(userEntity.getEmail())){
             return new ResponseDto(400, "You are not the owner of this card");
         }
         card.setColor("bg-"+cardDto.getColor()+"-100");
@@ -109,7 +109,7 @@ public class AllServicesImp implements AllServices {
         if(card == null){
             return new ResponseDto(400, "Card not found");
         }
-        if(card.getOwner().getId() != userEntity.getId()){
+        if(!card.getOwner().getEmail().equals(userEntity.getEmail())){
             return new ResponseDto(400, "You are not the owner of this card");
         }
         //create the text entity
@@ -132,7 +132,7 @@ public class AllServicesImp implements AllServices {
         if(card == null){
             return new ResponseDto(400, "Card not found");
         }
-        if(card.getOwner().getId() != userEntity.getId()){
+        if(!card.getOwner().getEmail().equals(userEntity.getEmail())){
             return new ResponseDto(400, "You are not the owner of this card");
         }
 

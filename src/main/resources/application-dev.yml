@@ -8,7 +8,7 @@ spring:
       application-id: rent-payment
     # bootstrap-servers: localhost:9092
   datasource:
-    url: jdbc:postgresql://remas-ke.co.ke:5432/cards
+    url: jdbc:postgresql://161.97.69.205:5432/cards
     username: remas
     password: Pass@word1
     driver-class-name: org.postgresql.Driver  
