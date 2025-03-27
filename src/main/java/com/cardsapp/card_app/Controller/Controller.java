@@ -50,18 +50,18 @@ public class Controller {
     }
 
     @PutMapping("/text/{textId}/underline")
-    public ResponseEntity<ResponseDto> underline(@PathVariable Long textId, @RequestParam boolean status) {
-        return getResponseEntity(allServices.underline(textId, status));
+    public ResponseEntity<ResponseDto> underline(@PathVariable Long textId) {
+        return getResponseEntity(allServices.underline(textId));
     }
 
     @PutMapping("/text/{textId}/highlight")
-    public ResponseEntity<ResponseDto> highlight(@PathVariable Long textId, @RequestParam boolean status) {
-        return getResponseEntity(allServices.highlight(textId, status));
+    public ResponseEntity<ResponseDto> highlight(@PathVariable Long textId) {
+        return getResponseEntity(allServices.highlight(textId));
     }
 
     @PutMapping("/text/{textId}/line-through")
-    public ResponseEntity<ResponseDto> lineThrough(@PathVariable Long textId, @RequestParam boolean status) {
-        return getResponseEntity(allServices.lineThrough(textId, status));
+    public ResponseEntity<ResponseDto> lineThrough(@PathVariable Long textId) {
+        return getResponseEntity(allServices.lineThrough(textId));
     }
 
     @PostMapping("/all/user/register")
