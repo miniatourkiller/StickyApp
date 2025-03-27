@@ -15,6 +15,7 @@ import com.cardsapp.card_app.DTO.TextDto;
 import com.cardsapp.card_app.DTO.UserDto;
 import com.cardsapp.card_app.DTO.Requests.RequestCard;
 import com.cardsapp.card_app.DTO.Requests.RequestUsers;
+import com.cardsapp.card_app.DTO.Responses.CardResponse;
 import com.cardsapp.card_app.Entities.Card;
 import com.cardsapp.card_app.Entities.TextsEntity;
 import com.cardsapp.card_app.Entities.UserEntity;
@@ -48,11 +49,8 @@ public class AllServicesImp implements AllServices {
         }
         //create the card entity
         Card card = new Card();
-        if(cardDto.getColor() != null && isHexColor(cardDto.getColor())){
-            card.setColor(cardDto.getColor());
-        }else{
-            return new ResponseDto(400, "Invalid color");
-        }
+        
+        card.setColor("bg-"+cardDto.getColor()+"-100");
         card.setOwner(userEntity);
         card.setTitle(cardDto.getTitle());
         cardRepo.save(card);
@@ -60,9 +58,9 @@ public class AllServicesImp implements AllServices {
     }
 
     //for checking valid colors
-    private boolean isHexColor(String color){
-        return color.matches("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
-    }
+    // private boolean isHexColor(String color){
+    //     return color.matches("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
+    // }
     @Override
     public ResponseDto deleteCard(Long cardId) {
         UserEntity userEntity = cacheServices.getUser(UserName.userName());
@@ -94,11 +92,7 @@ public class AllServicesImp implements AllServices {
         if(card.getOwner().getId() != userEntity.getId()){
             return new ResponseDto(400, "You are not the owner of this card");
         }
-        if(cardDto.getColor() != null && isHexColor(cardDto.getColor())){
-            card.setColor(cardDto.getColor());
-        }else{
-            return new ResponseDto(400, "Invalid color");
-        }
+        card.setColor("bg-"+cardDto.getColor()+"-100");
         card.setTitle(cardDto.getTitle());
         cardRepo.save(card);
         return new ResponseDto(200, "Card updated successfully");
@@ -255,7 +249,7 @@ public class AllServicesImp implements AllServices {
 
     @Override
     public ResponseDto getCards(RequestCard requestCard) {
-        return new ResponseDto(200, "Cards retrieved successfully", criteriaRepo.getCards(requestCard, UserName.userName()));
+        return new ResponseDto(200, "Cards retrieved successfully", criteriaRepo.getCards(requestCard, UserName.userName()).map(card->new CardResponse(card)));
     }
 
     @Override

@@ -22,6 +22,7 @@ public class SeederService {
         UserEntity user = cacheServices.getUser(userEmail);
         if (user == null) {
             user = new UserEntity();
+            user.setId(1l);
             user.setEmail(userEmail);
             user.setFullName("James Gathiru Karu");
             user.setPassword(passwordEncoder.encode("password"));

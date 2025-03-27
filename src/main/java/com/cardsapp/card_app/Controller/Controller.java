@@ -95,6 +95,7 @@ public class Controller {
         return getResponseEntity(allServices.getCards(requestCard));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/users")
     public ResponseEntity<ResponseDto> getUsers(@RequestBody RequestUsers requestUsers) {
         return getResponseEntity(allServices.getUsers(requestUsers));
