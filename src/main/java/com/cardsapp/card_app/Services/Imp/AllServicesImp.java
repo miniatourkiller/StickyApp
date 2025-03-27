@@ -162,36 +162,36 @@ public class AllServicesImp implements AllServices {
     }
 
     @Override
-    public ResponseDto underline(Long textId, boolean status) {
+    public ResponseDto underline(Long textId) {
         TextsEntity text = textsRepo.findById(textId).orElse(null);
         if(text == null){
             return new ResponseDto(400, "Text not found");
         }
-        text.setUnderline(status);
+        text.setUnderline(!text.isUnderline());
         textsRepo.save(text);
-        return new ResponseDto(200, status?"Underline added":"Underline removed");
+        return new ResponseDto(200, text.isUnderline()?"Underline added":"Underline removed");
     }
 
     @Override
-    public ResponseDto highlight(Long textId, boolean status) {
+    public ResponseDto highlight(Long textId) {
         TextsEntity text = textsRepo.findById(textId).orElse(null);
         if(text == null){
             return new ResponseDto(400, "Text not found");
         }
-        text.setHighlight(status);
+        text.setHighlight(!text.isHighlight());
         textsRepo.save(text);
-        return new ResponseDto(200, status?"Highlight added":"Highlight removed");
+        return new ResponseDto(200, text.isHighlight()?"Highlight added":"Highlight removed");
     }
 
     @Override
-    public ResponseDto lineThrough(Long textId, boolean status) {
+    public ResponseDto lineThrough(Long textId) {
         TextsEntity text = textsRepo.findById(textId).orElse(null);
         if(text == null){
             return new ResponseDto(400, "Text not found");
         }
-        text.setLineThrough(status);
+        text.setLineThrough(!text.isLineThrough());
         textsRepo.save(text);
-        return new ResponseDto(200, status?"Line through added":"Line through removed");
+        return new ResponseDto(200, text.isLineThrough()?"Line through added":"Line through removed");
     }
 
     @Override

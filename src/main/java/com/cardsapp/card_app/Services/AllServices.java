@@ -17,9 +17,9 @@ public interface AllServices {
     public ResponseDto deleteText(Long textId, Long cardId);
     public ResponseDto updateText(TextDto textDto);
     
-    public ResponseDto underline(Long textId, boolean status);
-    public ResponseDto highlight(Long textId, boolean status);
-    public ResponseDto lineThrough(Long textId, boolean status);
+    public ResponseDto underline(Long textId);
+    public ResponseDto highlight(Long textId);
+    public ResponseDto lineThrough(Long textId);
 
     public ResponseDto registerUser(UserDto userDto);
     public ResponseDto adminCreateAdmin(UserDto userDto);
