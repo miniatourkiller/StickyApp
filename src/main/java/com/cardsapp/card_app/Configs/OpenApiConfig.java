@@ -15,11 +15,11 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
     servers = {
         @io.swagger.v3.oas.annotations.servers.Server(
             description = "Contabo",
-            url = "http://161.97.69.205:8080/"
+            url = "http://161.97.69.205:4444/"
         ),
         @io.swagger.v3.oas.annotations.servers.Server(
             description = "Localhost",
-            url = "http://localhost:8080/"
+            url = "http://localhost:4444/"
         )
     }
 )
