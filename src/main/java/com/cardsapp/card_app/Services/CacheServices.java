@@ -25,8 +25,8 @@ public class CacheServices {
 
     //update user
     @CachePut(value = "user", key = "#user.email")
-    public void updateUser(UserEntity user){
-        userRepo.save(user);
+    public UserEntity updateUser(UserEntity user){
+        return userRepo.save(user);
     }
 
     //clear all users

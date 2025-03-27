@@ -161,4 +161,9 @@ public class DateUtils {
         LocalDateTime dateTime2 = LocalDateTime.parse(date2, formatter);
         return (int) java.time.temporal.ChronoUnit.MONTHS.between(dateTime1, dateTime2);
     }
+
+    public static String dateToday(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(dateTime);
+    }
 }

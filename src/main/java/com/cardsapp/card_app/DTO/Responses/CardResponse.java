@@ -14,6 +14,7 @@ public class CardResponse {
     private String title;
     private String dateCreated;
     private boolean reminder;
+    private String reminderDate;
 
     private List<TextsResponse> texts;
 
@@ -43,6 +44,7 @@ public class CardResponse {
         this.title = card.getTitle();
         this.reminder = card.isReminder();
         this.dateCreated = card.getDateCreated();
+        this.reminderDate = card.getReminderTime();
         this.texts = card.getTexts().stream().map(text -> new TextsResponse(text, card.getId())).toList();
     }
 }
