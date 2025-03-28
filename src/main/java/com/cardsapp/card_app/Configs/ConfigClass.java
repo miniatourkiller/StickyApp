@@ -90,7 +90,7 @@ public class ConfigClass {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(
             "http://localhost:4200", 
-            "https://yourdomain.com"
+            "http://remas-ke.co.ke:5656"
         ));
         configuration.setAllowedMethods(Arrays.asList(
             "GET", "POST", "PUT", "DELETE", "OPTIONS"
