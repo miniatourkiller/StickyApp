@@ -1,11 +1,12 @@
 package com.cardsapp.card_app.utils;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 public class DateUtils {
     public static String currentDate() {
-        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime localDateTime = getLocalDateTime();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return dateTimeFormatter.format(localDateTime);
     }
@@ -27,14 +28,14 @@ public class DateUtils {
     public static boolean isDateInFuture(String date) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime localDateTime = LocalDateTime.parse(date, dateTimeFormatter);
-        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime currentDateTime = getLocalDateTime();
         return localDateTime.isAfter(currentDateTime);
     }
 
     public static int daysLeft(String date) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime localDateTime = LocalDateTime.parse(date, dateTimeFormatter);
-        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime currentDateTime = getLocalDateTime();
         return localDateTime.getDayOfMonth() - currentDateTime.getDayOfMonth();
     }
 
@@ -127,7 +128,7 @@ public class DateUtils {
     }
 
     public static String dateTodayPlusMinutes(int minutes) {
-        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime currentDateTime = getLocalDateTime();
         LocalDateTime futureDateTime = currentDateTime.plusMinutes(minutes);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return formatter.format(futureDateTime);
@@ -136,22 +137,22 @@ public class DateUtils {
     public static boolean nowAfterDateTime(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
-        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime currentDateTime = getLocalDateTime();
         return currentDateTime.isAfter(dateTime);
     }
 
     public static String yearToday() {
-        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime currentDateTime = getLocalDateTime();
         return String.valueOf(currentDateTime.getYear());
     }
 
     public static String monthToday() {
-        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime currentDateTime = getLocalDateTime();
         return String.valueOf(currentDateTime.getMonthValue());
     }
 
     public static String dayToday() {
-        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime currentDateTime = getLocalDateTime();
         return String.valueOf(currentDateTime.getDayOfMonth());
     }
 
@@ -166,4 +167,11 @@ public class DateUtils {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return formatter.format(dateTime);
     }
+    
+    private static final ZoneId NAIROBI_ZONE = ZoneId.of("Africa/Nairobi");
+
+    public static LocalDateTime getLocalDateTime() {
+        return LocalDateTime.now(NAIROBI_ZONE);
+    }
+
 }

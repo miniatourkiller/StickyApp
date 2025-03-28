@@ -59,7 +59,7 @@ public class AllServicesImp implements AllServices {
         // create the card entity
         Card card = new Card();
 
-        card.setColor("bg-" + cardDto.getColor() + "-100");
+        card.setColor("bg-" + cardDto.getColor().toLowerCase().trim() + "-100");
         card.setOwner(userEntity);
         card.setTitle(cardDto.getTitle());
         cardRepo.save(card);
@@ -101,7 +101,7 @@ public class AllServicesImp implements AllServices {
         if (!card.getOwner().getEmail().equals(userEntity.getEmail())) {
             return new ResponseDto(400, "You are not the owner of this card");
         }
-        card.setColor("bg-" + cardDto.getColor() + "-100");
+        card.setColor("bg-" + cardDto.getColor().toLowerCase().trim() + "-100");
         card.setTitle(cardDto.getTitle());
         cardRepo.save(card);
         return new ResponseDto(200, "Card updated successfully");
@@ -238,8 +238,8 @@ public class AllServicesImp implements AllServices {
             return new ResponseDto(400, "User already exists");
         }
         UserEntity savedUser = cacheServices.updateUser(user);
-        String message = "Welcome to the sticky notes. With great power, comes great responsibility.";
-        MailMessage mailMessage = new MailMessage("Reminder", savedUser.getEmail(), "Welcome to the sticky Admin notes",
+        String message = "Welcome to the sticky notes. With great power, comes great responsibility Admin .";
+        MailMessage mailMessage = new MailMessage("Reminder", savedUser.getEmail(), "Welcome to the stickynotes",
                 savedUser.getFullName(), message);
 
         kafkaTemplate.send(topic, Mapper.classToString(mailMessage));
