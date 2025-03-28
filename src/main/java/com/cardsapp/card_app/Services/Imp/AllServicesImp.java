@@ -222,7 +222,7 @@ public class AllServicesImp implements AllServices {
         }
         UserEntity savedUser = cacheServices.updateUser(user);
         String message = "Welcome to the sticky notes. With great power, comes great responsibility.";
-        MailMessage mailMessage = new MailMessage("Reminder", savedUser.getEmail(), "You had set a reminder",
+        MailMessage mailMessage = new MailMessage("Reminder", savedUser.getEmail(), "Welcome to the sticky notes",
                 savedUser.getFullName(), message);
 
         kafkaTemplate.send(topic, Mapper.classToString(mailMessage));
@@ -237,7 +237,12 @@ public class AllServicesImp implements AllServices {
         if (existingUser != null) {
             return new ResponseDto(400, "User already exists");
         }
-        cacheServices.updateUser(user);
+        UserEntity savedUser = cacheServices.updateUser(user);
+        String message = "Welcome to the sticky notes. With great power, comes great responsibility.";
+        MailMessage mailMessage = new MailMessage("Reminder", savedUser.getEmail(), "Welcome to the sticky Admin notes",
+                savedUser.getFullName(), message);
+
+        kafkaTemplate.send(topic, Mapper.classToString(mailMessage));
         return new ResponseDto(200, "Admin created successfully");
     }
 
@@ -246,6 +251,13 @@ public class AllServicesImp implements AllServices {
         UserEntity user = cacheServices.getUser(login.getEmail());
         if (user == null) {
             return new ResponseDto(400, "User not found");
+        }
+
+        if(user.isDeleted()) {
+            return new ResponseDto(400, "User is deleted");
+        }
+        if (user.isActive() == false) {
+            return new ResponseDto(400, "User is not active");
         }
         if (passwordEncoder.matches(login.getPassword(), user.getPassword())) {
             Map<String, Object> userMap = new HashMap<>();
