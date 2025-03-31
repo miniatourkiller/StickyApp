@@ -38,3 +38,15 @@ springdoc:
   api-docs:
     path: /cards-app/v3/api-docs
     enabled: true
+
+logging:
+  file:
+    name: D:\\projects\\testlogs\\card-app.log
+  #set pattern for log file
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  logback:
+    rollingpolicy:
+      file-name-pattern: D:\\projects\\testlogs\\card-app-%d{yyyy-MM-dd}.%i.log
+      max-history: 10
+      total-size-cap: 100MB
